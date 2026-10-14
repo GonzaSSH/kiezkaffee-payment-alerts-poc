@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Proof of concept: alerts for failed card payments within a minute. Fictional customer, simulated payment provider." />
+    <title>Kiezkaffee payment alerts (proof of concept)</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cellipse cx='16' cy='16' rx='10' ry='14' fill='%233a2417'/%3E%3Cpath d='M16 3c-4 7 4 19 0 26' stroke='%23e9ecea' stroke-width='2' fill='none'/%3E%3C/svg%3E" />
+  </head>
+  <body>
+    <a class="skip" href="#console">Skip to the ops console</a>
+    <header class="masthead">
+      <div class="masthead-inner">
+        <p class="brand">Kiezkaffee <span class="brand-sub">Berlin coffee roaster</span></p>
+        <h1>Know about a failed payment within a minute, and why.</h1>
+        <p class="lede">
+          A proof of concept for Kiezkaffee’s support team. Trigger a payment problem below
+          and watch the alert arrive in the ops console and in Slack.
+        </p>
+        <ul class="disclaimers" aria-label="About this demo">
+          <li>Fictional customer</li>
+          <li>Simulated payment provider (Stripe-style)</li>
+          <li>No real payments, accounts or data</li>
+        </ul>
+      </div>
+    </header>
+
+    <main class="layout">
+      <section class="panel provider" aria-labelledby="provider-title">
+        <h2 id="provider-title">Payment provider <span class="tag">simulated</span></h2>
+        <p class="panel-intro">
+          Each button makes the simulated provider send a signed notification
+          (a webhook) to the integration, just as a real provider would.
+        </p>
+        <ol class="how" aria-label="What happens when you click">
+          <li>The provider sends a signed notification.</li>
+          <li>The integration checks the signature and skips repeats.</li>
+          <li>It explains the failure and alerts the team.</li>
+        </ol>
+        <div id="scenario-buttons" class="scenario-list"></div>
+        <button type="button" id="reset" class="reset">Reset demo</button>
+        <details class="outbox">
+          <summary>Last notification sent</summary>
+          <div id="outbox-body"><p class="empty">Nothing sent yet.</p></div>
+        </details>
+      </section>
+
+      <section class="panel console" id="console" aria-labelledby="console-title" tabindex="-1">
+        <h2 id="console-title">Ops console</h2>
+        <a class="back-to-scenarios" href="#provider-title">Try another scenario</a>
+        <dl class="counters" id="counters"></dl>
+        <div id="alerts" class="alerts" aria-live="polite"></div>
+      </section>
+
+      <section class="panel slack" aria-labelledby="slack-title">
+        <h2 id="slack-title">Slack <span class="tag">simulated</span></h2>
+        <p class="channel">#payments</p>
+        <div id="slack-messages" class="slack-messages"></div>
+      </section>
+
+      <section class="panel log" aria-labelledby="log-title">
+        <h2 id="log-title">Event log</h2>
+        <p class="panel-intro">Every notification the integration received, newest first. Support uses this to trace what happened.</p>
+        <label class="filter" for="log-filter">Trace a payment
+          <input id="log-filter" type="search" placeholder="Order number, e.g. KK-10424" autocomplete="off" />
+        </label>
+        <div class="log-table-wrap">
+          <table class="log-table">
+            <thead>
+              <tr><th scope="col">Time</th><th scope="col">Outcome</th><th scope="col">Order</th><th scope="col">Event ID</th><th scope="col">Detail</th></tr>
+            </thead>
+            <tbody id="log-body"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>
+        Portfolio project. Kiezkaffee is fictional; the payment provider is simulated and not
+        affiliated with Stripe. <a href="https://github.com/GonzaSSH/kiezkaffee-payment-alerts-poc">Code, documents and tests on GitHub</a>.
+      </p>
+    </footer>
+    <p id="announcer" class="visually-hidden" aria-live="assertive"></p>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
