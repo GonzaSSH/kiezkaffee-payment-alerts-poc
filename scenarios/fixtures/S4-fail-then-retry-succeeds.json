@@ -1,0 +1,73 @@
+{
+  "id": "S4",
+  "title": "Fails, then succeeds on retry",
+  "button": "Simulate: fails, then paid on retry",
+  "description": "A subscription renewal fails, then the customer retries with another card and pays.",
+  "deliveries": [
+    {
+      "signWith": "demo",
+      "event": {
+        "id": "evt_sim_s4_failed",
+        "object": "event",
+        "api_version": "2026-09-30.endive",
+        "created": 1791972000,
+        "data": {
+          "object": {
+            "id": "pi_sim_s4",
+            "object": "payment_intent",
+            "amount": 9000,
+            "currency": "eur",
+            "status": "requires_payment_method",
+            "receipt_email": "lena.w@example.com",
+            "metadata": {
+              "order_id": "KK-10424"
+            },
+            "last_payment_error": {
+              "type": "card_error",
+              "code": "card_declined",
+              "decline_code": "insufficient_funds",
+              "message": "Your card has insufficient funds."
+            }
+          }
+        },
+        "livemode": false,
+        "pending_webhooks": 1,
+        "request": {
+          "id": null,
+          "idempotency_key": null
+        },
+        "type": "payment_intent.payment_failed"
+      }
+    },
+    {
+      "signWith": "demo",
+      "event": {
+        "id": "evt_sim_s4_succeeded",
+        "object": "event",
+        "api_version": "2026-09-30.endive",
+        "created": 1791972000,
+        "data": {
+          "object": {
+            "id": "pi_sim_s4",
+            "object": "payment_intent",
+            "amount": 9000,
+            "currency": "eur",
+            "status": "succeeded",
+            "receipt_email": "lena.w@example.com",
+            "metadata": {
+              "order_id": "KK-10424"
+            },
+            "last_payment_error": null
+          }
+        },
+        "livemode": false,
+        "pending_webhooks": 1,
+        "request": {
+          "id": null,
+          "idempotency_key": null
+        },
+        "type": "payment_intent.succeeded"
+      }
+    }
+  ]
+}

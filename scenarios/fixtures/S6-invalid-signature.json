@@ -1,0 +1,43 @@
+{
+  "id": "S6",
+  "title": "Invalid signature",
+  "button": "Simulate: invalid signature",
+  "description": "Someone sends a fake failure notification signed with the wrong secret.",
+  "deliveries": [
+    {
+      "signWith": "wrong",
+      "event": {
+        "id": "evt_sim_s6_failed",
+        "object": "event",
+        "api_version": "2026-09-30.endive",
+        "created": 1791972000,
+        "data": {
+          "object": {
+            "id": "pi_sim_s6",
+            "object": "payment_intent",
+            "amount": 4100,
+            "currency": "eur",
+            "status": "requires_payment_method",
+            "receipt_email": "eve.x@example.com",
+            "metadata": {
+              "order_id": "KK-10426"
+            },
+            "last_payment_error": {
+              "type": "card_error",
+              "code": "card_declined",
+              "decline_code": "insufficient_funds",
+              "message": "Your card has insufficient funds."
+            }
+          }
+        },
+        "livemode": false,
+        "pending_webhooks": 1,
+        "request": {
+          "id": null,
+          "idempotency_key": null
+        },
+        "type": "payment_intent.payment_failed"
+      }
+    }
+  ]
+}

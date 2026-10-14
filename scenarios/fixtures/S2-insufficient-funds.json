@@ -1,0 +1,43 @@
+{
+  "id": "S2",
+  "title": "Insufficient funds",
+  "button": "Simulate: insufficient funds",
+  "description": "The card does not have enough money for the order.",
+  "deliveries": [
+    {
+      "signWith": "demo",
+      "event": {
+        "id": "evt_sim_s2_failed",
+        "object": "event",
+        "api_version": "2026-09-30.endive",
+        "created": 1791972000,
+        "data": {
+          "object": {
+            "id": "pi_sim_s2",
+            "object": "payment_intent",
+            "amount": 5450,
+            "currency": "eur",
+            "status": "requires_payment_method",
+            "receipt_email": "tom.b@example.com",
+            "metadata": {
+              "order_id": "KK-10422"
+            },
+            "last_payment_error": {
+              "type": "card_error",
+              "code": "card_declined",
+              "decline_code": "insufficient_funds",
+              "message": "Your card has insufficient funds."
+            }
+          }
+        },
+        "livemode": false,
+        "pending_webhooks": 1,
+        "request": {
+          "id": null,
+          "idempotency_key": null
+        },
+        "type": "payment_intent.payment_failed"
+      }
+    }
+  ]
+}

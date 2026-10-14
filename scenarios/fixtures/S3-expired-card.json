@@ -1,0 +1,43 @@
+{
+  "id": "S3",
+  "title": "Expired card",
+  "button": "Simulate: expired card",
+  "description": "The customer pays with a card that has expired.",
+  "deliveries": [
+    {
+      "signWith": "demo",
+      "event": {
+        "id": "evt_sim_s3_failed",
+        "object": "event",
+        "api_version": "2026-09-30.endive",
+        "created": 1791972000,
+        "data": {
+          "object": {
+            "id": "pi_sim_s3",
+            "object": "payment_intent",
+            "amount": 1890,
+            "currency": "eur",
+            "status": "requires_payment_method",
+            "receipt_email": "ayse.k@example.com",
+            "metadata": {
+              "order_id": "KK-10423"
+            },
+            "last_payment_error": {
+              "type": "card_error",
+              "code": "expired_card",
+              "decline_code": "expired_card",
+              "message": "Your card has expired."
+            }
+          }
+        },
+        "livemode": false,
+        "pending_webhooks": 1,
+        "request": {
+          "id": null,
+          "idempotency_key": null
+        },
+        "type": "payment_intent.payment_failed"
+      }
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "id": "S7",
+  "title": "Unknown failure reason",
+  "button": "Simulate: unknown failure reason",
+  "description": "The provider sends a failure reason this integration has never seen.",
+  "deliveries": [
+    {
+      "signWith": "demo",
+      "event": {
+        "id": "evt_sim_s7_failed",
+        "object": "event",
+        "api_version": "2026-09-30.endive",
+        "created": 1791972000,
+        "data": {
+          "object": {
+            "id": "pi_sim_s7",
+            "object": "payment_intent",
+            "amount": 3600,
+            "currency": "eur",
+            "status": "requires_payment_method",
+            "receipt_email": "noah.f@example.com",
+            "metadata": {
+              "order_id": "KK-10427"
+            },
+            "last_payment_error": {
+              "type": "card_error",
+              "code": "card_declined",
+              "decline_code": "some_code_we_dont_know",
+              "message": "Your card was declined."
+            }
+          }
+        },
+        "livemode": false,
+        "pending_webhooks": 1,
+        "request": {
+          "id": null,
+          "idempotency_key": null
+        },
+        "type": "payment_intent.payment_failed"
+      }
+    }
+  ]
+}

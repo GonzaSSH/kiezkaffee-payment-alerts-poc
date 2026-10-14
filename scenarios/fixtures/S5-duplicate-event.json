@@ -1,0 +1,78 @@
+{
+  "id": "S5",
+  "title": "Duplicate event",
+  "button": "Simulate: duplicate event",
+  "description": "The provider delivers the same failure notification twice (this happens in real life).",
+  "deliveries": [
+    {
+      "signWith": "demo",
+      "event": {
+        "id": "evt_sim_s5_failed",
+        "object": "event",
+        "api_version": "2026-09-30.endive",
+        "created": 1791972000,
+        "data": {
+          "object": {
+            "id": "pi_sim_s5",
+            "object": "payment_intent",
+            "amount": 2700,
+            "currency": "eur",
+            "status": "requires_payment_method",
+            "receipt_email": "max.r@example.com",
+            "metadata": {
+              "order_id": "KK-10425"
+            },
+            "last_payment_error": {
+              "type": "card_error",
+              "code": "card_declined",
+              "decline_code": "generic_decline",
+              "message": "Your card was declined."
+            }
+          }
+        },
+        "livemode": false,
+        "pending_webhooks": 1,
+        "request": {
+          "id": null,
+          "idempotency_key": null
+        },
+        "type": "payment_intent.payment_failed"
+      }
+    },
+    {
+      "signWith": "demo",
+      "event": {
+        "id": "evt_sim_s5_failed",
+        "object": "event",
+        "api_version": "2026-09-30.endive",
+        "created": 1791972000,
+        "data": {
+          "object": {
+            "id": "pi_sim_s5",
+            "object": "payment_intent",
+            "amount": 2700,
+            "currency": "eur",
+            "status": "requires_payment_method",
+            "receipt_email": "max.r@example.com",
+            "metadata": {
+              "order_id": "KK-10425"
+            },
+            "last_payment_error": {
+              "type": "card_error",
+              "code": "card_declined",
+              "decline_code": "generic_decline",
+              "message": "Your card was declined."
+            }
+          }
+        },
+        "livemode": false,
+        "pending_webhooks": 1,
+        "request": {
+          "id": null,
+          "idempotency_key": null
+        },
+        "type": "payment_intent.payment_failed"
+      }
+    }
+  ]
+}

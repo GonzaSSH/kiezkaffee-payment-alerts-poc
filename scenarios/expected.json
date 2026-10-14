@@ -1,0 +1,171 @@
+{
+  "S1": {
+    "alerts": [
+      {
+        "orderId": "KK-10421",
+        "amount": "€32.00",
+        "maskedEmail": "j•••@example.com",
+        "title": "Card declined",
+        "explanation": "The customer's bank declined the card and did not say why.",
+        "nextStep": "Contact the customer and ask them to use another card or payment method.",
+        "status": "open"
+      }
+    ],
+    "slack": [
+      "🚨 Payment failed: order KK-10421 (€32.00)\nReason: Card declined. The customer's bank declined the card and did not say why.\nNext step: Contact the customer and ask them to use another card or payment method.\nContact details: in the ops console (not shared in Slack)."
+    ],
+    "log": [
+      {
+        "outcome": "alert_raised",
+        "eventId": "evt_sim_s1_failed_r1",
+        "orderId": "KK-10421",
+        "detail": "Alert raised for order KK-10421: Card declined"
+      }
+    ]
+  },
+  "S2": {
+    "alerts": [
+      {
+        "orderId": "KK-10422",
+        "amount": "€54.50",
+        "maskedEmail": "t•••@example.com",
+        "title": "Insufficient funds",
+        "explanation": "The card did not have enough money for this order.",
+        "nextStep": "Contact the customer and offer a new payment link, or ask for another card.",
+        "status": "open"
+      }
+    ],
+    "slack": [
+      "🚨 Payment failed: order KK-10422 (€54.50)\nReason: Insufficient funds. The card did not have enough money for this order.\nNext step: Contact the customer and offer a new payment link, or ask for another card.\nContact details: in the ops console (not shared in Slack)."
+    ],
+    "log": [
+      {
+        "outcome": "alert_raised",
+        "eventId": "evt_sim_s2_failed_r1",
+        "orderId": "KK-10422",
+        "detail": "Alert raised for order KK-10422: Insufficient funds"
+      }
+    ]
+  },
+  "S3": {
+    "alerts": [
+      {
+        "orderId": "KK-10423",
+        "amount": "€18.90",
+        "maskedEmail": "a•••@example.com",
+        "title": "Expired card",
+        "explanation": "The card has expired.",
+        "nextStep": "Ask the customer to update their card details and pay again.",
+        "status": "open"
+      }
+    ],
+    "slack": [
+      "🚨 Payment failed: order KK-10423 (€18.90)\nReason: Expired card. The card has expired.\nNext step: Ask the customer to update their card details and pay again.\nContact details: in the ops console (not shared in Slack)."
+    ],
+    "log": [
+      {
+        "outcome": "alert_raised",
+        "eventId": "evt_sim_s3_failed_r1",
+        "orderId": "KK-10423",
+        "detail": "Alert raised for order KK-10423: Expired card"
+      }
+    ]
+  },
+  "S4": {
+    "alerts": [
+      {
+        "orderId": "KK-10424",
+        "amount": "€90.00",
+        "maskedEmail": "l•••@example.com",
+        "title": "Insufficient funds",
+        "explanation": "The card did not have enough money for this order.",
+        "nextStep": "Contact the customer and offer a new payment link, or ask for another card.",
+        "status": "recovered"
+      }
+    ],
+    "slack": [
+      "🚨 Payment failed: order KK-10424 (€90.00)\nReason: Insufficient funds. The card did not have enough money for this order.\nNext step: Contact the customer and offer a new payment link, or ask for another card.\nContact details: in the ops console (not shared in Slack).",
+      "✅ Recovered: order KK-10424 (€90.00) was paid on retry. No action needed."
+    ],
+    "log": [
+      {
+        "outcome": "alert_raised",
+        "eventId": "evt_sim_s4_failed_r1",
+        "orderId": "KK-10424",
+        "detail": "Alert raised for order KK-10424: Insufficient funds"
+      },
+      {
+        "outcome": "alert_resolved",
+        "eventId": "evt_sim_s4_succeeded_r1",
+        "orderId": "KK-10424",
+        "detail": "Order KK-10424 paid on retry: alert marked recovered"
+      }
+    ]
+  },
+  "S5": {
+    "alerts": [
+      {
+        "orderId": "KK-10425",
+        "amount": "€27.00",
+        "maskedEmail": "m•••@example.com",
+        "title": "Card declined",
+        "explanation": "The customer's bank declined the card and did not say why.",
+        "nextStep": "Contact the customer and ask them to use another card or payment method.",
+        "status": "open"
+      }
+    ],
+    "slack": [
+      "🚨 Payment failed: order KK-10425 (€27.00)\nReason: Card declined. The customer's bank declined the card and did not say why.\nNext step: Contact the customer and ask them to use another card or payment method.\nContact details: in the ops console (not shared in Slack)."
+    ],
+    "log": [
+      {
+        "outcome": "alert_raised",
+        "eventId": "evt_sim_s5_failed_r1",
+        "orderId": "KK-10425",
+        "detail": "Alert raised for order KK-10425: Card declined"
+      },
+      {
+        "outcome": "duplicate",
+        "eventId": "evt_sim_s5_failed_r1",
+        "orderId": "KK-10425",
+        "detail": "Duplicate of an event already processed: ignored, no new alert"
+      }
+    ]
+  },
+  "S6": {
+    "alerts": [],
+    "slack": [],
+    "log": [
+      {
+        "outcome": "rejected",
+        "eventId": null,
+        "orderId": null,
+        "detail": "Invalid signature: no signature matches this payload. Notification rejected, no alert"
+      }
+    ]
+  },
+  "S7": {
+    "alerts": [
+      {
+        "orderId": "KK-10427",
+        "amount": "€36.00",
+        "maskedEmail": "n•••@example.com",
+        "title": "Unrecognised failure reason",
+        "explanation": "The payment provider gave a reason we don't recognise (some_code_we_dont_know).",
+        "nextStep": "Check this payment in the payment provider's dashboard, then contact the customer.",
+        "status": "open"
+      }
+    ],
+    "slack": [
+      "🚨 Payment failed: order KK-10427 (€36.00)\nReason: Unrecognised failure reason. The payment provider gave a reason we don't recognise (some_code_we_dont_know).\nNext step: Check this payment in the payment provider's dashboard, then contact the customer.\nContact details: in the ops console (not shared in Slack)."
+    ],
+    "log": [
+      {
+        "outcome": "alert_raised",
+        "eventId": "evt_sim_s7_failed_r1",
+        "orderId": "KK-10427",
+        "detail": "Alert raised for order KK-10427: Unrecognised failure reason"
+      }
+    ]
+  }
+}
