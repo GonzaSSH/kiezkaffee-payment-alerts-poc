@@ -6,7 +6,7 @@
 
 ## Who they are
 
-Kiezkaffee is a small specialty coffee roaster in Berlin-Neukölln. It roasts twice a
+Kiezkaffee is a small specialty coffee roaster in Berlin-Mitte. It roasts twice a
 week and sells beans and subscriptions through its own web shop, mostly to customers in
 Germany and Austria.
 
