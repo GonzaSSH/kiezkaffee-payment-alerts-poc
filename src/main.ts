@@ -5,18 +5,24 @@ import '@fontsource/atkinson-hyperlegible/700.css';
 import './styles.css';
 import { createIntegration } from './core/integration';
 import type { Clock } from './core/types';
-import { createStripeStyleAdapter } from './provider/adapter';
-import { DEMO_WEBHOOK_SECRET } from './provider/config';
-import { SCENARIOS, buildDeliveries, type Scenario } from './provider/simulator';
+import { DEMO_SCENARIOS, createProviderAdapter, describeDelivery, simulateScenario } from './provider';
 import { byId } from './ui/dom';
-import { renderAlerts, renderCounters, renderLog, renderOutbox, renderScenarioButtons, renderSlack } from './ui/render';
+import {
+  renderAlerts,
+  renderCounters,
+  renderLog,
+  renderOutbox,
+  renderScenarioButtons,
+  renderSlack,
+  type ScenarioButton,
+} from './ui/render';
 
 /** Pause between notifications in one scenario, so each step is visible. */
 const DELIVERY_GAP_MS = 400;
 
 const clock: Clock = { nowMs: () => Date.now() };
 const integration = createIntegration({
-  adapter: createStripeStyleAdapter({ secret: DEMO_WEBHOOK_SECRET, clock }),
+  adapter: createProviderAdapter(clock),
   clock,
 });
 
@@ -36,14 +42,14 @@ let run = 0;
 let busy = false;
 const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
-async function runScenario(scenario: Scenario) {
+async function runScenario(scenario: ScenarioButton) {
   if (busy) return;
   busy = true;
   setBusy(true);
   run += 1;
   try {
-    const deliveries = await buildDeliveries(scenario, { run, nowMs: clock.nowMs() });
-    renderOutbox(deliveries);
+    const deliveries = await simulateScenario(scenario.id, { run, nowMs: clock.nowMs() });
+    renderOutbox(deliveries.map(describeDelivery));
     for (const [i, delivery] of deliveries.entries()) {
       if (i > 0) await wait(DELIVERY_GAP_MS);
       const entry = await integration.receiveWebhook(delivery.rawBody, delivery.headers);
@@ -60,7 +66,7 @@ async function runScenario(scenario: Scenario) {
   }
 }
 
-const buttons = renderScenarioButtons(SCENARIOS, (s) => void runScenario(s));
+const buttons = renderScenarioButtons(DEMO_SCENARIOS, (s) => void runScenario(s));
 function setBusy(on: boolean) {
   for (const b of [...buttons, byId<HTMLButtonElement>('reset')]) b.disabled = on;
   byId('scenario-buttons').setAttribute('aria-busy', String(on));

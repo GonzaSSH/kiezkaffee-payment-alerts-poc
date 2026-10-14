@@ -1,6 +1,5 @@
 import type { Alert, LogEntry, LogOutcome, SlackMessage } from '../core/types';
 import { orderLabel } from '../core/format';
-import type { Delivery, Scenario } from '../provider/simulator';
 import { byId, h } from './dom';
 
 const GOAL_MS = 60_000;
@@ -10,7 +9,16 @@ const time = (ms: number) =>
 
 const seconds = (ms: number) => `${(ms / 1000).toFixed(1)} s`;
 
-export function renderScenarioButtons(scenarios: Scenario[], onRun: (s: Scenario) => void): HTMLButtonElement[] {
+export interface ScenarioButton {
+  id: string;
+  button: string;
+  description: string;
+}
+
+export function renderScenarioButtons(
+  scenarios: ScenarioButton[],
+  onRun: (s: ScenarioButton) => void,
+): HTMLButtonElement[] {
   const list = byId('scenario-buttons');
   const buttons = scenarios.map((s) => {
     const button = h('button', { type: 'button', class: 'scenario', 'data-scenario': s.id },
@@ -147,16 +155,17 @@ export function renderLog(log: LogEntry[], filter: string): void {
   );
 }
 
-export function renderOutbox(deliveries: Delivery[]): void {
-  if (deliveries.length === 0) {
+/** Shows the raw notifications the simulated provider sent, one per block. */
+export function renderOutbox(notifications: string[]): void {
+  if (notifications.length === 0) {
     byId('outbox-body').replaceChildren(h('p', { class: 'empty' }, 'Nothing sent yet.'));
     return;
   }
   byId('outbox-body').replaceChildren(
-    ...deliveries.map((d, i) =>
+    ...notifications.map((text, i) =>
       h('div', { class: 'outbox-item' },
-        h('p', {}, deliveries.length > 1 ? `Notification ${i + 1} of ${deliveries.length}` : 'Notification'),
-        h('pre', { class: 'mono' }, `POST /webhooks/payments\nStripe-Signature: ${d.headers['Stripe-Signature'] ?? ''}\n\n${JSON.stringify(JSON.parse(d.rawBody), null, 2)}`),
+        h('p', {}, notifications.length > 1 ? `Notification ${i + 1} of ${notifications.length}` : 'Notification'),
+        h('pre', { class: 'mono' }, text),
       ),
     ),
   );
