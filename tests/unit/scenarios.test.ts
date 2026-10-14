@@ -5,8 +5,20 @@ import expected from '../../scenarios/expected.json';
 import { SCENARIOS, buildDeliveries } from '../../src/provider/simulator';
 import { FIXED_NOW_MS, fixedClock, newIntegration } from './helpers';
 
-type Expected = (typeof expected)['S1'];
-const EXPECTED = expected as Record<string, Expected>;
+interface Expected {
+  alerts: {
+    orderId: string;
+    amount: string;
+    maskedEmail: string;
+    title: string;
+    explanation: string;
+    nextStep: string;
+    status: string;
+  }[];
+  slack: string[];
+  log: { outcome: string; eventId: string | null; orderId: string | null; detail: string }[];
+}
+const EXPECTED: Record<string, Expected> = expected;
 
 async function runScenario(id: string) {
   const scenario = SCENARIOS.find((s) => s.id === id);
@@ -26,9 +38,8 @@ describe('scenarios match EXPECTED.md / expected.json', () => {
     expect(Object.keys(EXPECTED).sort()).toEqual(['S1', 'S2', 'S3', 'S4', 'S5', 'S6', 'S7']);
   });
 
-  for (const id of Object.keys(EXPECTED)) {
+  for (const [id, want] of Object.entries(EXPECTED)) {
     describe(id, () => {
-      const want = EXPECTED[id]!;
 
       it('raises exactly the expected alerts', async () => {
         const integration = await runScenario(id);

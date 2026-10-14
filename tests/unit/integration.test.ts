@@ -219,7 +219,8 @@ describe('state', () => {
     const i = newIntegration(fixedClock());
     const d = await signed(failed('evt_1'));
     await i.receiveWebhook(d.rawBody, d.headers);
-    const alert = i.getAlerts()[0]!;
+    const [alert] = i.getAlerts();
+    if (!alert) throw new Error('expected an alert');
     alert.status = 'recovered';
     expect(i.getAlerts()[0]?.status).toBe('open');
   });
