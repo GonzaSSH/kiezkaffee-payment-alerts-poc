@@ -261,5 +261,6 @@ unit tests:
 | Event type we don't handle (e.g. `charge.failed`) | `ignored`: "Event type charge.failed is not handled: ignored". No alert |
 | `payment_intent.succeeded` with no open alert | `recorded`: "Payment succeeded for order <order>: no open alert". No alert, no Slack |
 | The same payment fails again (new event ID, e.g. second card also declined) while its alert is open | **No second alert.** The existing alert is updated to the latest reason and shows 2 attempts. `alert_updated`: "Order <order> failed again: <title>. Alert updated". Slack: one message starting `🔁 Payment failed again: order <order> (<amount>)`, then the same Reason / Next step / Contact details lines |
+| Notifications arrive out of order: `payment_intent.succeeded` first, then an earlier `payment_intent.payment_failed` for the same payment | **No alert** (the order is already paid). `recorded`: "Late failure notification for order <order>: payment already succeeded, no alert" |
 | Two copies of the same event arrive at the same moment | Exactly one alert (the duplicate check cannot be raced) |
 | Any Slack message | Never contains the customer's email address |

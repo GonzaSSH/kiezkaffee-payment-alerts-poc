@@ -27,6 +27,9 @@ export function createIntegration(deps: { adapter: PaymentProviderAdapter; clock
   const alerts = createAlerts(clock);
   const log = createLog(clock);
   let slack: SlackMessage[] = [];
+  // Providers don't promise delivery order, so remember which payments are paid:
+  // a failure that arrives after the success must not raise an alert.
+  const paid = new Set<string>();
   const listeners = new Set<() => void>();
 
   const postToSlack = (text: string) => slack.push({ channel: SLACK_CHANNEL, text, atMs: clock.nowMs() });
@@ -48,6 +51,7 @@ export function createIntegration(deps: { adapter: PaymentProviderAdapter; clock
     const existing: Alert | undefined = alerts.get(payment.id);
 
     if (event.kind === 'payment_succeeded') {
+      paid.add(payment.id);
       if (existing?.status === 'open') {
         alerts.resolve(existing);
         postToSlack(recoveredMessage(existing));
@@ -56,6 +60,13 @@ export function createIntegration(deps: { adapter: PaymentProviderAdapter; clock
       return log.add({ ...ids, outcome: 'recorded', detail: `Payment succeeded for order ${order}: no open alert` });
     }
 
+    if (paid.has(payment.id)) {
+      return log.add({
+        ...ids,
+        outcome: 'recorded',
+        detail: `Late failure notification for order ${order}: payment already succeeded, no alert`,
+      });
+    }
     const { reason, providerCode } = event.failure;
     if (existing?.status === 'open') {
       alerts.update(existing, reason, providerCode);
@@ -116,6 +127,7 @@ export function createIntegration(deps: { adapter: PaymentProviderAdapter; clock
     getLog: (): LogEntry[] => log.all(),
     reset(): void {
       dedupe.clear();
+      paid.clear();
       alerts.clear();
       log.clear();
       slack = [];

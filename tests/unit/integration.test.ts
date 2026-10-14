@@ -146,6 +146,32 @@ describe('same payment fails again', () => {
   });
 });
 
+describe('out-of-order delivery', () => {
+  it('a failure arriving after the success of the same payment does not alert', async () => {
+    const i = newIntegration();
+    for (const e of [succeeded('evt_ok'), failed('evt_late')]) {
+      const d = await signed(e);
+      await i.receiveWebhook(d.rawBody, d.headers);
+    }
+    expect(i.getAlerts()).toEqual([]);
+    expect(i.getSlackMessages()).toEqual([]);
+    expect(i.getLog().map((l) => [l.outcome, l.detail])).toEqual([
+      ['recorded', 'Payment succeeded for order KK-9: no open alert'],
+      ['recorded', 'Late failure notification for order KK-9: payment already succeeded, no alert'],
+    ]);
+  });
+
+  it('a late failure after a recovery does not reopen the alert', async () => {
+    const i = newIntegration();
+    for (const e of [failed('evt_1'), succeeded('evt_2'), failed('evt_late')]) {
+      const d = await signed(e);
+      await i.receiveWebhook(d.rawBody, d.headers);
+    }
+    expect(i.getAlerts().map((a) => a.status)).toEqual(['recovered']);
+    expect(i.getSlackMessages()).toHaveLength(2);
+  });
+});
+
 describe('duplicates', () => {
   it('two copies arriving at the same moment still raise exactly one alert', async () => {
     const i = newIntegration();
