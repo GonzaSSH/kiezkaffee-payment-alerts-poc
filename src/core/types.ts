@@ -1,4 +1,4 @@
-// Provider-neutral types. Nothing in this file knows about Stripe or any other
+// Provider-neutral types. Nothing in this file knows about any particular
 // payment provider: the provider adapter (src/provider/) translates into these.
 
 /** Why a payment failed, in our own words (not the provider's codes). */
