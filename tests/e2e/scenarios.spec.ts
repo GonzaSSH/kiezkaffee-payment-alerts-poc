@@ -82,6 +82,11 @@ for (const [id, want] of Object.entries(EXPECTED)) {
     const details = await page.getByTestId('log-detail').allTextContents();
     expect(outcomes.reverse()).toEqual(want.log.map((l) => l.outcome));
     expect(details.reverse()).toEqual(want.log.map((l) => l.detail));
+    const orders = await rows.locator('td[data-label="Order"]').allTextContents();
+    const eventIds = await rows.locator('td[data-label="Event ID"]').allTextContents();
+    expect(orders.reverse()).toEqual(want.log.map((l) => l.orderId ?? '–'));
+    // A rejected notification is not trusted, so no ID from it is shown (S6).
+    expect(eventIds.reverse()).toEqual(want.log.map((l) => l.eventId ?? '– (not trusted)'));
   });
 }
 
