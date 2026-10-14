@@ -95,7 +95,8 @@ are reasonable, and they cannot both be fully true.
 do: the order number, amount, reason and suggested next step. The *who* (contact
 details) is one click away in a place Kiezkaffee controls. Murat agreed after we
 mocked it up: "One click is fine. Scrolling the dashboard for 15 minutes is the
-problem." The demo shows exactly this split. The Slack message never includes a
+problem." The demo shows this split: the Slack message tells support to open the ops console.
+The clickable link needs a real console address, so it comes with the real deployment. The Slack message never includes a
 name or email address. The ops console shows a masked email (`l•••@example.com`) to
 show where contact details would live.
 

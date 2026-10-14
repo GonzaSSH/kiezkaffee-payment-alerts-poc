@@ -57,7 +57,7 @@ These are the numbers we agree to measure the proof of concept against:
 
 | # | Success measure | Target | How the proof of concept shows it |
 |---|---|---|---|
-| 1 | Time from failed payment to alert | **≤ 60 seconds** (in the demo: under 1 second) | Each alert shows its "time to alert" |
+| 1 | Time from failed payment to alert | **≤ 60 seconds** (in the demo: about a second or less) | Each alert shows its "time to alert" |
 | 2 | Failed payments that raise an alert | **100%**, including reasons we don't recognise | Scenario S7: an unknown reason still alerts |
 | 3 | Duplicate alerts for one failure | **0** | Scenario S5: one event sent twice gives one alert |
 | 4 | Fake (unsigned or wrongly signed) notifications accepted | **0** | Scenario S6: rejected and logged, no alert |

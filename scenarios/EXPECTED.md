@@ -22,7 +22,9 @@ the tests, and a unit test checks that every expected text below also appears th
   creates two separate failures instead of a duplicate. This file shows run 1. Inside
   one run, a scenario's own duplicate (S5) keeps the same ID.
 - **Timing**: in every scenario that alerts, the alert must appear within 60 seconds of
-  the event being created (success measure 1). In the browser this takes milliseconds.
+  the event being created (success measure 1). Processing takes milliseconds, but the
+  shown time can read up to about 1 s, because Stripe-style event timestamps are in
+  whole seconds.
 
 ## Summary
 

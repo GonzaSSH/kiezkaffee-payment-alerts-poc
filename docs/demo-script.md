@@ -43,7 +43,7 @@ in the middle, and Slack on the right, because Slack is where the team already w
 
 **Say (as the alert appears):**
 "A customer's card didn't have enough money. Look at three things.
-First, *speed*: alerted in well under a second. The target was sixty.
+First, *speed*: alerted in about a second. The target was sixty.
 Second, *why*, in plain words. Not a code like `insufficient_funds` that Murat used to google.
 Third, *what to do next*: offer a new payment link."
 

@@ -32,7 +32,7 @@ flowchart LR
     P -- "HTTPS POST<br/>Stripe-Signature header" --> B
     A --> O
     A --> S
-    S -. "link" .-> O
+    S -. "link (real deployment)" .-> O
 ```
 
 **In one sentence:** the provider tells the integration that a payment failed. The

@@ -34,7 +34,11 @@ Open the order in the **payment provider's dashboard** and search by order numbe
 ## Step 2: Is the alert there, just not where you looked? (support, 2 min)
 
 1. Open the **ops console** and use **Trace a payment** with the order number.
-2. Check the result against this table:
+2. If that finds nothing, **clear the search** and scan the log around the time of the
+   payment. `Rejected` and `Ignored` rows never show an order number (a rejected
+   notification is not trusted, and an ignored one is not about a payment), so the
+   search can't find them.
+3. Check what you found against this table:
 
 | The event log shows | What it means | Next |
 |---|---|---|
@@ -78,7 +82,8 @@ Check these in the **payment provider's dashboard** → *Developers* → *Webhoo
 
 ## Step 5: It arrived but didn't alert (developer, 5 min)
 
-Find the notification in the log by order number:
+Find the notification in the log: search by order number, then clear the search and
+look around the payment time for `Ignored` rows (they have no order number):
 
 | Log outcome | Meaning | Fix |
 |---|---|---|

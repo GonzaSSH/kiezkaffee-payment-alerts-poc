@@ -19,9 +19,12 @@ silence.
 - **Old notifications can't be replayed.** A signature older than 5 minutes is rejected.
 - **The signature comparison takes the same time whatever the input**, so an attacker
   can't guess the signature by timing it.
-- **No card data, ever.** The provider keeps card details. The integration only
-  receives order number, amount, failure reason and the customer's email. Your PCI
-  scope does not change.
+- **No card numbers, ever.** The provider keeps card details. The notification does
+  include the provider's payment record, which can carry billing name and address and
+  the card's brand, last 4 digits and expiry. The integration **keeps only** the
+  order number, amount, failure reason and the customer's email, and discards the rest.
+  None of the discarded fields are logged or sent to Slack. Your PCI scope does not
+  change, because full card numbers never arrive.
 - **The secret stays on the server**, in the hosting platform's secret store. Secret
   rotation works without downtime: during a rotation the provider sends two
   signatures, and the integration accepts either.
